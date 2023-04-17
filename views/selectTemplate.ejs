@@ -32,10 +32,16 @@
                     <div class="col" >
                         <div class="card" style="height: 280px;" id="type-api">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary">+ add</button>
-                                <button type="button" class="btn btn-secondary">None</button>
-                                <button type="button" class="btn btn-success">B-box-soccer</button>
-                                <button type="button" class="btn btn-danger">Danger</button>
+                                <button type="button" class="btn btn-primary" onclick="pageMove('createtemplate')">+ add</button>
+
+                                <input type="checkbox" class="btn-check" id="btn-none" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btn-none">none</label>
+
+                                <input type="checkbox" class="btn-check" id="B-box-soccer" autocomplete="off">
+                                <label class="btn btn-primary" for="B-box-soccer">B-box-soccer</label>
+
+                                <input type="checkbox" class="btn-check" id="B-box-s" autocomplete="off">
+                                <label class="btn btn-primary" for="B-box-s">B-box-s</label>
                             </div>
                         </div>
                     </div>
@@ -60,7 +66,7 @@
                                     <div class="" style="color: #666666;">Key Point</div>
                                     <div class="mb-2" >21</div>
     
-                                    <button type="button" class="btn btn-primary">Edit Template</button>
+                                    <button type="button" class="btn btn-outline-primary">Edit Template</button>
                                 </div>
                                 <div class="border border-1 rounded" style="width: 240px;">
 
@@ -88,13 +94,31 @@
                 </div>
 
                 <div class="col d-flex justify-content-between">
-                    <button type="button" class="btn btn-lg btn-outline-primary">Back</button>
-                    <button type="button" class="btn btn-lg btn-primary">Next</button>
+                    <button type="button" class="btn btn-lg btn-outline-primary" onclick="pageMove('addfiles')">Back</button>
+                    <button type="button" class="btn btn-lg btn-primary" onclick="pageMove('gallerylist')">Next</button>
                 </div>
             </div>
         </div>
 
     </div>
 </body>
+<script>
+    function pageMove(page){
+        var params;
+        var url = "http://127.0.0.1:7000/";
+        switch (page){
+            case "addfiles" :
+                params = "addfiles"
+                break;
+            case "createtemplate" :
+                params = "createtemplate"
+                break;
+            case "gallerylist" :
+                params = "gallerylist"
+                break;
+        }
+        window.location.href = url + params;
 
+    }
+</script>
 </html>
