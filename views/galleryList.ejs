@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,60 +14,65 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <style>
-    .card{
+    .card {
         height: 280px;
+        cursor: pointer;
     }
 </style>
 <!--
 
 -->
+
 <body>
     <%- include('./header') %>
     <div class="container my-4">
-        <div class="row row-cols-4" id="gallerylist">
+        <div class="row row-cols-4 g-4" id="gallerylist">
             <div class="col">
-                <div class="card" style="width: 18rem; border: 2px dashed #D9D9D9;">
-                    <div class="card-body d-flex justify-content-center align-items-center" onclick="pageMove('addfiles');">
-                      <p class="card-text">+ add gallery</p>
+                <div class="card w-100" style="border: 2px dashed #D9D9D9;">
+                    <div class="card-body d-flex justify-content-center align-items-center"
+                        onclick="pageMove('addfiles');">
+                        <p class="card-text">+ add gallery</p>
                     </div>
-                  </div>
+                </div>
             </div>
             <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="http://49.50.160.122:3000/soccer_kick_sample/%2F220802%208%EB%B0%A9%ED%96%A5%EC%B9%B4%EB%A9%94%EB%9D%BC%20%ED%82%A5%201%ED%9A%8C%205%EC%9E%A5%EC%82%AC%EC%A7%84%EC%B6%94%EC%B6%9C%2F1-1%2F175303_661_CH1.jpg" class="card-img-top" alt="...">
-                    <div class="card-img-overlay">
-                        <div class="btn-group dropend" data-bs-toggle="dropdown" aria-expanded="false" style="float: right;">
-                            <i class="fa-solid fa-ellipsis-vertical "style="color: #f4f4f4; font-size: 20px;" ></i>
+                <div class=" card w-100" >
+                    <div class="" style="position: absolute; margin: 1em; right: 0;">
+                        <div class="btn btn-light btn-group dropend" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="float: right; border-radius: 10px; background-color: #666666bb; ">
+                            <i class="fa-solid fa-ellipsis-vertical " style="color: #f4f4f4; font-size: 20px;"></i>
                         </div>
                         <ul class="dropdown-menu">
-                            <li><button class="dropdown-item" type="button">edit</button></li>
-                            <li><button class="dropdown-item" type="button">delete</button></li>
+                            <li><button class="dropdown-item" type="button">Edit</button></li>
+                            <li><button class="dropdown-item" type="button">Delete</button></li>
                         </ul>
                     </div>
-                    <div class="card-body">
-                      <p class="gallery-title" style="">축구</p>
-                      <span class="" style="color: #666666;">Updated</span>
-                      <span class="" >2023-04-17</span>
-                  </div>
+                    <img src="http://49.50.160.122:3000/soccer_kick_sample/%2F220802%208%EB%B0%A9%ED%96%A5%EC%B9%B4%EB%A9%94%EB%9D%BC%20%ED%82%A5%201%ED%9A%8C%205%EC%9E%A5%EC%82%AC%EC%A7%84%EC%B6%94%EC%B6%9C%2F1-1%2F175303_661_CH1.jpg"
+                        class="card-img-top" alt="..."  onclick="pageMove('soccer');">
+                    <div class="card-body" onclick="pageMove('soccer');">
+                        <div class="gallery-title" style="">축구</div>
+                        <span class="" style="color: #666666;">Updated</span>
+                        <span class="">2023-04-17</span>
+                    </div>
+                </div>
             </div>
         </div>
-        
-    </div>
 </body>
 <script>
-    function pageMove(page){
+    function pageMove(page) {
         var params;
         var url = "http://127.0.0.1:7000/";
-        switch (page){
-            case "addfiles" :
+        switch (page) {
+            case "addfiles":
                 params = "addFiles"
                 break;
-            case "soccer" :
-                params = "gallery"
+            case "soccer":
+                params = "imagegallery"
                 break;
         }
         window.location.href = url + params;
 
     }
 </script>
+
 </html>

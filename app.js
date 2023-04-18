@@ -50,5 +50,10 @@ app.get('/createTemplate', (req, res) => {
     console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
 })
 
+app.get('/imageGallery', (req, res) => {
+    res.render('imagegallery');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
 
 http.listen(port, () => console.log(`app listening on port ${port}!`));

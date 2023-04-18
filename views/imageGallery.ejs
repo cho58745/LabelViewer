@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Viewer</title>
+    <script language="javascript" type="text/javascript" src="js/jquery-3.6.4.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <script language="javascript" type="text/javascript" src="js/fontawesome.all.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery.nanogallery2.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/fontawesome.all.css">
+    <link rel="stylesheet" type="text/css" href="css/nanogallery2.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<style>
+    .card {
+        height: 280px;
+    }
+    
+</style>
+<!--
+
+-->
+
+<body>
+    <div class="row">
+        <div class="col">
+            <%- include('./header') %>
+        </div>
+        <div class="col align-self-center d-flex justify-content-end" style="float: right; margin-right: 2em; cursor: pointer;" onclick="pageMove('gallerylist')">
+            <i class="fa-solid fa-arrow-left" style="font-size: 36px;"></i>
+        </div>
+    </div>
+    <div class="container-fluid p-4">
+        <div class="row mb-2">
+            <div class="col-2">
+                <div style="color: #666666;">Gallery Name</div>
+                <div> 축구 </div>
+                <!--
+                <div class="input-group mb-4" style="max-width: 400px;">
+                    <select class="form-select" aria-label=".form-select-sm example">
+                        <option selected>개발2 - 10.41.143.231</option>
+                        <option value="1">반려동물 Data - 10.250.53.94</option>
+                        <option value="2">Human Keypoints (Halpe Image) - 10.250.53.94</option>
+                        <option value="3">해상도 테스트 - 10.250.53.94</option>
+                    </select>
+                </div>-->
+            </div>
+            <div class="col-8">
+                <div>Label</div>
+                <input type="checkbox" class="btn-check" id="btn-none" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-none">none</label>
+
+                <input type="checkbox" class="btn-check" id="B-box-soccer" autocomplete="off">
+                <label class="btn btn-outline-primary" for="B-box-soccer">B-box-soccer</label>
+
+                <input type="checkbox" class="btn-check" id="B-box-s" autocomplete="off">
+                <label class="btn btn-outline-primary" for="B-box-s">B-box-s</label>
+            </div>
+            <div class="col-2 d-flex align-items-end justify-content-end">
+                <button type="button" class="btn btn-outline-secondary" id="btn-edit-gallery" onclick="pageMove('addfiles')">Edit Gallery</button>
+            </div>
+        </div>
+        <div ID="imageGallery">
+        </div>
+    </div>
+</body>
+<script>
+    var myLightboxTool = function (customElementName, $customIcon, item) {
+        alert('Media title :' + item.title);
+    }
+    
+
+    $("#imageGallery").nanogallery2({
+        // ### gallery settings ###
+        thumbnailHeight: 300,
+        thumbnailWidth: 300,
+        itemsBaseURL: 'https://nanogallery2.nanostudio.org/samples/',
+        thumbnailWidth: "auto",
+        thumbnailBorderVertical: 0,
+        thumbnailBorderHorizontal: 0,
+        colorScheme: {
+            thumbnail: {
+                background: "rgba(255,255,255,100)"
+            }
+        },
+        thumbnailLabel: {
+            position: "overImageOnBottom",
+            display: false
+        },
+        thumbnailAlignment: "center",
+        galleryMaxItems: 50,
+        thumbnailGutterWidth: 5,
+        thumbnailGutterHeight: 5,
+        thumbnailOpenImage: true,
+        viewerToolbar: {
+            standard: 'minimizeButton, label, shareButton, fullscreenButton',
+            minimized: 'minimizeButton, label, fullscreenButton, downloadButton, infoButton'
+        },
+        viewerTools: {
+            topLeft: 'label',
+            topRight: 'playPauseButton, zoomButton, fullscreenButton, closeButton'
+        },
+        icons: {
+            viewerCustomTool1: 'myScript'
+        },
+        fnImgToolbarCustClick: myLightboxTool,
+
+
+        // ### gallery content ###
+        items: [{
+                src: 'berlin1.jpg',
+                srct: 'berlin1t.jpg',
+                title: 'Title Image 1'
+            },
+            {
+                src: 'berlin2.jpg',
+                srct: 'berlin2t.jpg',
+                title: 'Title Image 2'
+            },
+            {
+                src: 'berlin3.jpg',
+                srct: 'berlin3t.jpg',
+                title: 'Title Image 3'
+            }
+        ]
+    });
+
+    function pageMove(page) {
+        var params;
+        var url = "http://127.0.0.1:7000/";
+        switch (page) {
+            case "addfiles":
+                params = "addFiles"
+                break;
+            case "gallerylist":
+                params = "gallerylist"
+                break;
+        }
+        window.location.href = url + params;
+
+    }
+</script>
+
+</html>
