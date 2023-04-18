@@ -19,18 +19,18 @@
     .card {
         height: 280px;
     }
-    
 </style>
 <!--
 
 -->
 
 <body>
-    <div class="row">
+    <div class="d-flex">
         <div class="col">
             <%- include('./header') %>
         </div>
-        <div class="col align-self-center d-flex justify-content-end" style="float: right; margin-right: 2em; cursor: pointer;" onclick="pageMove('gallerylist')">
+        <div class="col align-self-center d-flex justify-content-end"
+            style="float: right; margin-right: 2em; cursor: pointer;" onclick="pageMove('gallerylist')">
             <i class="fa-solid fa-arrow-left" style="font-size: 36px;"></i>
         </div>
     </div>
@@ -39,18 +39,9 @@
             <div class="col-2">
                 <div style="color: #666666;">Gallery Name</div>
                 <div> 축구 </div>
-                <!--
-                <div class="input-group mb-4" style="max-width: 400px;">
-                    <select class="form-select" aria-label=".form-select-sm example">
-                        <option selected>개발2 - 10.41.143.231</option>
-                        <option value="1">반려동물 Data - 10.250.53.94</option>
-                        <option value="2">Human Keypoints (Halpe Image) - 10.250.53.94</option>
-                        <option value="3">해상도 테스트 - 10.250.53.94</option>
-                    </select>
-                </div>-->
             </div>
             <div class="col-8">
-                <div>Label</div>
+                <div style="color: #666666;">Label</div>
                 <input type="checkbox" class="btn-check" id="btn-none" autocomplete="off">
                 <label class="btn btn-outline-primary" for="btn-none">none</label>
 
@@ -61,10 +52,34 @@
                 <label class="btn btn-outline-primary" for="B-box-s">B-box-s</label>
             </div>
             <div class="col-2 d-flex align-items-end justify-content-end">
-                <button type="button" class="btn btn-outline-secondary" id="btn-edit-gallery" onclick="pageMove('addfiles')">Edit Gallery</button>
+                <button type="button" class="btn btn-outline-secondary" id="btn-edit-gallery"
+                    onclick="pageMove('addfiles')">Edit Gallery</button>
             </div>
         </div>
-        <div ID="imageGallery">
+
+        <div ID="imageGallery" style="overflow-y: scroll; height: 80%;">
+        </div>
+
+        <div class="d-flex justify-content-between fixed-bottom p-4" style="background-color: #fff;">
+            <div class="col align-self-center">
+                <span style="color: #666666;">Total</span>
+                <span id="totalcount"> 15,000 </span>
+            </div>
+            <div class="col d-flex align-items-end gap-2" style="justify-content: flex-end;">
+                <button class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-chevron-left align-self-center" style="font-size: 20px;"></i>
+                </button>
+                <div class="input-group align-self-center" style="width: 4em;">
+                    <input type="text" class="form-control" placeholder="1" aria-label="Username"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="align-self-center">/</div>
+                <div class="align-self-center" id="page-count">50</div>
+                <button class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-chevron-right align-self-center" style="font-size: 20px;"></i>
+                </button>
+            </div>
+
         </div>
     </div>
 </body>
@@ -72,13 +87,96 @@
     var myLightboxTool = function (customElementName, $customIcon, item) {
         alert('Media title :' + item.title);
     }
+
+
     
 
-    $("#imageGallery").nanogallery2({
+    function pageMove(page) {
+        var params;
+        var url = "http://127.0.0.1:7000/";
+        switch (page) {
+            case "addfiles":
+                params = "addFiles"
+                break;
+            case "gallerylist":
+                params = "gallerylist"
+                break;
+        }
+        window.location.href = url + params;
+
+    }
+
+    $(document).ready(function () {
+        getImage()
+    });
+
+    function getImage() {
+        var env_path = 'D:\\MgnSData\\Datas\\';
+
+        $.ajax({
+            type: 'post', //데이터 전송 타입,
+            url: 'http://127.0.0.1:3030/Report/DetectionImageView/All?&StorageID=&PageNum=1&CountOfPage=49&ErrorType=&SShot=1', //데이터를 주고받을 파일 주소 입력,
+            //data: datasetInfo,
+            //보내는 데이터,
+            dataType: 'JSON', //문자형식으로 받기 , 
+            success: function (result) {
+                console.log(result);
+                imagePath(result);
+            },
+            error: function () {
+                alert("error");
+            }
+        })
+    }
+
+    /* misun
+    D/I의 Image path를 만들어준다. 
+    result information: 
+    api : http://49.50.160.122:9070/OpenAPI/Report/DetectionImageView/All
+    errorinfo
+
+    Apipath: D:\\MgnSData\\Datas\\2022\\7\\22\\9\\24863\\Thumb_24863_0_0x80000000_0.jpg
+    Imagepath: http://49.50.160.122:3000/errorimages/2022/7/22/9/24863/24863_0_0x80000000_0.jpg
+    */
+    function imagePath(result) {
+
+        var data = result.errorinfo;
+
+        //url 매핑을 위해 url을 만들어준다.
+
+        var originParam, excludeParam;
+        var pathArr = [];
+
+        for (i = 0; i < data.length; i++) {
+            originParam = result.errorinfo[i].thumbnailpath;
+            excludeParam = 'D:\\MgnSData\\Datas\\';
+            originParam = originParam.replace(excludeParam, "");
+            originParam = originParam.replace("Thumb_", "");
+
+
+            originParam = originParam.replace(/\\/ig, "/");
+            //originParam = originParam.replace(/\\/ig, "/");
+
+            
+            object ={
+                src: originParam,
+                srct: originParam,
+                title: result.errorinfo[i].mediatitle
+            }
+            
+            pathArr.push(object);
+        }
+        console.log(pathArr);
+        
+        makeGallery(pathArr)
+    }
+
+    function makeGallery(pathArr){
+        $("#imageGallery").nanogallery2({
         // ### gallery settings ###
         thumbnailHeight: 300,
         thumbnailWidth: 300,
-        itemsBaseURL: 'https://nanogallery2.nanostudio.org/samples/',
+        itemsBaseURL: 'http://49.50.160.122:3000/errorimages/',
         thumbnailWidth: "auto",
         thumbnailBorderVertical: 0,
         thumbnailBorderHorizontal: 0,
@@ -111,37 +209,8 @@
 
 
         // ### gallery content ###
-        items: [{
-                src: 'berlin1.jpg',
-                srct: 'berlin1t.jpg',
-                title: 'Title Image 1'
-            },
-            {
-                src: 'berlin2.jpg',
-                srct: 'berlin2t.jpg',
-                title: 'Title Image 2'
-            },
-            {
-                src: 'berlin3.jpg',
-                srct: 'berlin3t.jpg',
-                title: 'Title Image 3'
-            }
-        ]
+        items: pathArr
     });
-
-    function pageMove(page) {
-        var params;
-        var url = "http://127.0.0.1:7000/";
-        switch (page) {
-            case "addfiles":
-                params = "addFiles"
-                break;
-            case "gallerylist":
-                params = "gallerylist"
-                break;
-        }
-        window.location.href = url + params;
-
     }
 </script>
 
