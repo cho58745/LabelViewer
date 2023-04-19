@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/fontawesome.all.css">
     <link rel="stylesheet" type="text/css" href="css/nanogallery2.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script language="javascript" type="text/javascript" src="js/globalconst.js"></script>
+
 </head>
 <style>
     .card {
@@ -107,7 +109,7 @@
     }
 
     $(document).ready(function () {
-        getImage()
+        getImage();
     });
 
     function getImage() {
@@ -115,7 +117,7 @@
 
         $.ajax({
             type: 'post', //데이터 전송 타입,
-            url: 'http://127.0.0.1:3030/Report/DetectionImageView/All?&StorageID=&PageNum=1&CountOfPage=49&ErrorType=&SShot=1', //데이터를 주고받을 파일 주소 입력,
+            url: _WEBSERVER_ROOT_URL + 'Report/DetectionImageView/All?&StorageID=&PageNum=1&CountOfPage=49&ErrorType=&SShot=1', //데이터를 주고받을 파일 주소 입력,
             //data: datasetInfo,
             //보내는 데이터,
             dataType: 'JSON', //문자형식으로 받기 , 
