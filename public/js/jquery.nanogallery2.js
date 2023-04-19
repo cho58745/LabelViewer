@@ -5231,8 +5231,8 @@
       newElt[newEltIdx++]='  <img class="nGY2GThumbnailImg nGY2TnImg2" src="' + src + '" alt="' + sTitle + '" style="opacity:0;" data-idx="' + idx + '" data-albumidx="' + G.GOM.albumIdx + '" >';
       newElt[newEltIdx++]='</div>';
       
-      // ##### layer for user customization purposes
-      newElt[newEltIdx++]='<div class="nGY2GThumbnailCustomLayer"></div>';
+      // ##### layer for user customization purposes by.misun
+      newElt[newEltIdx++]='<div class="nGY2GThumbnailCustomLayer"><canvas id="canvas'+idx+'" style="width:100%; height:100%"></canvas></div>';
 
       // ##### layer for labels (title + description and their icons)
       if( G.O.thumbnailLabel.get('display') == true ) {
